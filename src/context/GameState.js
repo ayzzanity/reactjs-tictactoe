@@ -65,65 +65,70 @@ const GameStateProvider = (props) => {
   //checking function
   function checking() {
     if (GameArray.some((game) => game.move === "")) {
-      if (GameArray[4].move !== "") {
-        if (
-          (GameArray[4].move === GameArray[3].move &&
-            GameArray[4].move === GameArray[5].move) ||
-          (GameArray[4].move === GameArray[1].move &&
-            GameArray[4].move === GameArray[7].move) ||
-          (GameArray[4].move === GameArray[0].move &&
-            GameArray[4].move === GameArray[8].move) ||
-          (GameArray[4].move === GameArray[2].move &&
-            GameArray[4].move === GameArray[6].move)
-        ) {
-          setGameStatus(false);
-          announceWinner(4);
-        }
-      }
-      if (GameArray[1].move !== "") {
-        if (
-          GameArray[1].move === GameArray[0].move &&
-          GameArray[1].move === GameArray[2].move
-        ) {
-          setGameStatus(false);
-          announceWinner(1);
-        }
-      }
-      if (GameArray[3].move !== "") {
-        if (
-          GameArray[3].move === GameArray[0].move &&
-          GameArray[3].move === GameArray[6].move
-        ) {
-          setGameStatus(false);
-          announceWinner(3);
-        }
-      }
-      if (GameArray[5].move !== "") {
-        if (
-          GameArray[5].move === GameArray[2].move &&
-          GameArray[5].move === GameArray[8].move
-        ) {
-          setGameStatus(false);
-          announceWinner(5);
-        }
-      }
-      if (GameArray[7].move !== "") {
-        if (
-          GameArray[7].move === GameArray[6].move &&
-          GameArray[7].move === GameArray[8].move
-        ) {
-          setGameStatus(false);
-          announceWinner(7);
-        }
-      }
+      compareBoxes();
     } else {
       setGameStatus(false);
       setGameResult("DRAW!");
       setPlayerToggle(playerToggle);
+      compareBoxes();
+    }
+  }
+  //box comparison function
+  function compareBoxes() {
+    if (GameArray[4].move !== "") {
+      if (
+        (GameArray[4].move === GameArray[3].move &&
+          GameArray[4].move === GameArray[5].move) ||
+        (GameArray[4].move === GameArray[1].move &&
+          GameArray[4].move === GameArray[7].move) ||
+        (GameArray[4].move === GameArray[0].move &&
+          GameArray[4].move === GameArray[8].move) ||
+        (GameArray[4].move === GameArray[2].move &&
+          GameArray[4].move === GameArray[6].move)
+      ) {
+        setGameStatus(false);
+        announceWinner(4);
+      }
+    }
+    if (GameArray[1].move !== "") {
+      if (
+        GameArray[1].move === GameArray[0].move &&
+        GameArray[1].move === GameArray[2].move
+      ) {
+        setGameStatus(false);
+        announceWinner(1);
+      }
+    }
+    if (GameArray[3].move !== "") {
+      if (
+        GameArray[3].move === GameArray[0].move &&
+        GameArray[3].move === GameArray[6].move
+      ) {
+        setGameStatus(false);
+        announceWinner(3);
+      }
+    }
+    if (GameArray[5].move !== "") {
+      if (
+        GameArray[5].move === GameArray[2].move &&
+        GameArray[5].move === GameArray[8].move
+      ) {
+        setGameStatus(false);
+        announceWinner(5);
+      }
+    }
+    if (GameArray[7].move !== "") {
+      if (
+        GameArray[7].move === GameArray[6].move &&
+        GameArray[7].move === GameArray[8].move
+      ) {
+        setGameStatus(false);
+        announceWinner(7);
+      }
     }
   }
   //winner function
-  async function announceWinner(index) {
+  function announceWinner(index) {
     if (GameArray[index].move === "X") {
       setPlayerToggle(false);
       setGameScore({
