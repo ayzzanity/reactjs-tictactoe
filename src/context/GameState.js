@@ -42,7 +42,6 @@ const GameStateProvider = (props) => {
   }
   //player toggle function
   function toggleMove(e) {
-    checking();
     if (e.target.innerText === "" && gameStatus) {
       if (playerToggle) {
         setGameArray(
@@ -120,6 +119,7 @@ const GameStateProvider = (props) => {
     } else {
       setGameStatus(false);
       setGameResult("DRAW!");
+      setPlayerToggle(playerToggle);
     }
   }
   //winner function
@@ -131,7 +131,6 @@ const GameStateProvider = (props) => {
         p1: `${parseInt(gameScore.p1) + 1}`,
       });
       setGameResult("Player 1 wins!");
-      checkPoints();
     } else if (GameArray[index].move === "O") {
       setPlayerToggle(true);
       setGameScore({
@@ -143,11 +142,24 @@ const GameStateProvider = (props) => {
   }
   //checkpoints function
   function checkPoints() {
-    if (gameScore.p1 === "2") {
+    if (
+      gameScore.p1 === "2" ||
+      (gameId === "RESULT" && gameScore.p1 > gameScore.p2)
+    ) {
       setGameResult("CHAMPION: PLAYER 1");
       setGameStatus(false);
-    } else if (gameScore.p2 === "2") {
+      setBtnText("PLAY AGAIN");
+      setGameId("RESULT");
+    } else if (
+      gameScore.p2 === "2" ||
+      (gameId === "RESULT" && gameScore.p1 < gameScore.p2)
+    ) {
       setGameResult("CHAMPION: PLAYER 2");
+      setGameStatus(false);
+      setBtnText("PLAY AGAIN");
+      setGameId("RESULT");
+    } else if (gameId === "RESULT" && gameScore.p1 === gameScore.p2) {
+      setGameResult("RESULT: DRAW!");
       setGameStatus(false);
     }
   }
